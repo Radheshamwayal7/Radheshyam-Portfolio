@@ -1,17 +1,57 @@
 import {
-  SiJava,
   SiReact,
   SiMysql,
-  SiSpringboot
+  SiSpringboot,
 } from "react-icons/si";
-import { FaCode } from "react-icons/fa";
+
+import { FaCode, FaJava } from "react-icons/fa";
 import { ArrowUpRight, Download } from "lucide-react";
+import { useRef } from "react";
+import "../styles/Hero.css";
 
 function Hero() {
+  const imageWrapperRef = useRef(null);
+
+  /* =========================================
+     INTERACTIVE IMAGE
+  ========================================= */
+
+  const handleMouseMove = (e) => {
+    const element = imageWrapperRef.current;
+
+    if (!element) return;
+
+    const rect = element.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateY = ((x - centerX) / centerX) * 5;
+    const rotateX = ((centerY - y) / centerY) * 5;
+
+    element.style.setProperty("--mouse-x", `${rotateY}deg`);
+    element.style.setProperty("--mouse-y", `${rotateX}deg`);
+  };
+
+  const handleMouseLeave = () => {
+    const element = imageWrapperRef.current;
+
+    if (!element) return;
+
+    element.style.setProperty("--mouse-x", "0deg");
+    element.style.setProperty("--mouse-y", "0deg");
+  };
+
   return (
     <section className="hero" id="home">
 
-      {/* LEFT SIDE */}
+      {/* =========================================
+          LEFT SIDE
+      ========================================= */}
+
       <div className="hero-content">
 
         <div className="availability">
@@ -34,9 +74,14 @@ function Hero() {
           using Java, Spring Boot, React and MySQL.
         </p>
 
+        {/* BUTTONS */}
+
         <div className="hero-buttons">
 
-          <a href="#projects" className="primary-btn">
+          <a
+            href="#projects"
+            className="primary-btn"
+          >
             View My Work
             <ArrowUpRight size={18} />
           </a>
@@ -52,8 +97,13 @@ function Hero() {
 
         </div>
 
-        {/* SOCIAL */}
+        {/* =========================================
+            SOCIAL LINKS
+        ========================================= */}
+
         <div className="social-links">
+
+          {/* GitHub */}
 
           <a
             href="https://github.com/"
@@ -68,6 +118,8 @@ function Hero() {
               />
             </svg>
           </a>
+
+          {/* LinkedIn */}
 
           <a
             href="https://www.linkedin.com/"
@@ -84,52 +136,79 @@ function Hero() {
           </a>
 
         </div>
+
       </div>
 
-        {/* RIGHT SIDE VISUAL */}
-        <div className="hero-visual">
+      {/* =========================================
+          RIGHT SIDE VISUAL
+      ========================================= */}
+
+      <div className="hero-visual">
+
+        {/* Orange Glow */}
 
         <div className="hero-image-glow"></div>
 
-        <div className="developer-image-wrapper">
-            <img
+        {/* Developer Image */}
+
+        <div
+          className="developer-image-wrapper"
+          ref={imageWrapperRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          <img
             src="/developer-character.png"
             alt="Radheshyam - Java Full Stack Developer"
             className="developer-character"
-            />
+          />
         </div>
 
-        {/* Floating Code Card */}
-        <div className="tech-card code-card-new">
-            <span>&lt;/&gt;</span>
-        </div>
+        {/* =========================================
+            JAVA
+        ========================================= */}
 
-        {/* Java */}
         <div className="tech-card java-card">
-            <span>☕</span>
-            <small>Java</small>
+          <FaJava />
+          <small>Java</small>
         </div>
 
-        {/* React */}
+        {/* =========================================
+            REACT
+        ========================================= */}
+
         <div className="tech-card react-card">
-            <span>⚛</span>
-            <small>React</small>
+          <SiReact />
+          <small>React</small>
         </div>
 
-        {/* MySQL */}
+        {/* =========================================
+            CODE
+        ========================================= */}
+
+        <div className="tech-card code-card-new">
+          <FaCode />
+        </div>
+
+        {/* =========================================
+            MYSQL
+        ========================================= */}
+
         <div className="tech-card mysql-card">
-            <span>◉</span>
-            <small>MySQL</small>
+          <SiMysql />
+          <small>MySQL</small>
         </div>
 
-        {/* Spring Boot */}
+        {/* =========================================
+            SPRING BOOT
+        ========================================= */}
+
         <div className="tech-card spring-card">
-            <span>◆</span>
-            <small>Spring Boot</small>
+          <SiSpringboot />
+          <small>Spring Boot</small>
         </div>
 
-        </div>
-
+      </div>
 
     </section>
   );
